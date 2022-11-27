@@ -52,18 +52,18 @@ function lower_first_letter() {
 # Replace first occurence of pattern with replacement string
 # Usage: astring a my >> mystring
 function replace() {
-    input="${1:? Input string must be provided}"
-    pattern="${2:? Pattern must be provided}"
-    replacement="${3:? String for replacement must be provided}"
+    local input="${1:? Input string must be provided}"
+    local pattern="${2:? Pattern must be provided}"
+    local replacement="$3"
     printf "%s\n" "${input/$pattern/$replacement}"
 }
 
 # Replace first occurence of pattern with replacement string
 # Usage: astring a my >> mystring
 function replaceAll() {
-    input="${1:? Input string must be provided}"
-    pattern="${2:? Pattern must be provided}"
-    replacement="${3:? String for replacement must be provided}"
+    local input="${1:? Input string must be provided}"
+    local pattern="${2:? Pattern must be provided}"
+    local replacement="$3"
     printf "%s\n" "${input//$pattern/$replacement}"
 }
 
@@ -123,4 +123,29 @@ function split() {
         input="$(substring "$input" $((index + 1 )))"
         index=$(( $index + 1))
     done
+}
+
+# Trim a string from both sides, trims spaces if second parameter is not provided
+# Usage: trim "   mystring    " >> "mystring"
+function trim() {
+    local input="$1"
+    input="${input%${input##*[!${2:- }]}}"
+    input="${input#${input%%[!${2:- }]*}}"
+    printf "%s\n" "$input"
+}
+
+# Trim a string from the beginning ( left )
+# Usage: ltrim --123 - >> 123
+function ltrim() {
+    local input="$1"
+    input="${input#${input%%[!${2:- }]*}}"
+    printf "%s\n" "$input"
+}
+
+# Trim a string from the end ( right )
+# Usage: rtrim 123-- - >> 123
+function rtrim() {
+    local input="$1"
+    input="${input%${input##*[!${2:- }]}}"
+    printf "%s\n" "$input"
 }
