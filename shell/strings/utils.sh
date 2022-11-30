@@ -12,7 +12,7 @@ function valid_int(){
 # Length of input
 # Usage: length string >> 6
 function length(){
-    echo "${#1}"
+    printf "%s\n" "${#1}"
 }
 
 # Substring of string given an offset starting from 0 and optionally length
@@ -20,7 +20,7 @@ function length(){
 function substring() {
     # input="$1"
     # offset=$2
-    _length=$3
+    local _length=$3
     _length=${_length:=$(length "$1")}
     printf "%s\n" "${1:$2:$_length}"
 }
